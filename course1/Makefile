@@ -32,11 +32,11 @@ include sources.mk
 # Platform Overrides
 PLATFORM ?= HOST
 
-TARGET = c1m2
+TARGET = c1final
 
 ifeq ($(PLATFORM),MSP432)
     # Architectures Specific Flags
-    LINKER_FILE = ../msp432p401r.lds
+    LINKER_FILE = msp432p401r.lds
     CPU = cortex-m4
     ARCH = armv7e-m
     SPECS = nosys.specs
@@ -57,6 +57,9 @@ else
     CPPFLAGS = -DHOST $(INCLUDES)
 
 endif
+
+# Compile time switches
+CPPFLAGS += -DCOURSE1 -DVERBOSE
 
 CFLAGS = -Wall -Werror -g -O0 -std=c99 $(ARCHFLAGS) #applies for both platforms
 
@@ -79,7 +82,7 @@ DEPS = $(OBJS:.o=.d)
 	$(CC) -S $(CPPFLAGS) $(CFLAGS) $< -o $@
 
 # Assembly of an output file
-%.asm: %out
+%.asm: %.out
 	objdump -d $< > $@
 
 # Object file + dependencies

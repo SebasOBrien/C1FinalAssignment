@@ -22,6 +22,9 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
+#include <stdint.h>
+#include <stddef.h>
+
 /**
  * @brief Sets a value of a data array 
  *
@@ -89,5 +92,62 @@ void set_all(char * ptr, char value, unsigned int size);
  * @return void.
  */
 void clear_all(char * ptr, unsigned int size);
+
+/**
+ * @brief Moves bytes from src to dst, handling overlapping regions safely.
+ * @param src Pointer to the source memory
+ * @param dst Pointer to the destination memory
+ * @param length Number of bytes to move
+ * @return Pointer to dst
+ */
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length);
+
+/**
+ * @brief Copies bytes from src to dst. Behavior is undefined if the regions overlap.
+ * @param src Pointer to the source memory
+ * @param dst Pointer to the destination memory
+ * @param length Number of bytes to copy
+ * @return Pointer to dst
+ */
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length);
+
+/**
+ * @brief Sets every byte of a memory region to a given value.
+ * @param src Pointer to the memory region
+ * @param length Number of bytes to set
+ * @param value Value to write in each byte
+ * @return Pointer to src
+ */
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value);
+
+/**
+ * @brief Sets every byte of a memory region to zero.
+ * @param src Pointer to the memory region
+ * @param length Number of bytes to zero out
+ * @return Pointer to src
+ */
+uint8_t * my_memzero(uint8_t * src, size_t length);
+
+/**
+ * @brief Reverses the order of the bytes in a memory region, in place.
+ * @param src Pointer to the memory region
+ * @param length Number of bytes to reverse
+ * @return Pointer to src
+ */
+uint8_t * my_reverse(uint8_t * src, size_t length);
+
+/**
+ * @brief Allocates dynamic memory for a number of 32-bit words.
+ * @param length Number of words to allocate
+ * @return Pointer to the allocated memory, or NULL if the allocation fails
+ */
+int32_t * reserve_words(size_t length);
+
+/**
+ * @brief Frees a dynamic memory allocation made with reserve_words.
+ * @param src Pointer to the memory to free
+ * @return The function doesn't return any value
+ */
+void free_words(uint32_t * src);
 
 #endif /* __MEMORY_H__ */
